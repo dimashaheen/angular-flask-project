@@ -12,17 +12,18 @@ import {
   providedIn: 'root'
 })
 export class ApiService {
-  endpoint: string = '';
+  endpoint: string = 'http://127.0.0.1:5000/';
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient) {}
+
   // Add employee
   AddEmployee(data: Employee): Observable<any> {
-    let API_URL = `${this.endpoint}/add-employee`;
+    let API_URL = `${this.endpoint}new_employee`;
     return this.http.post(API_URL, data).pipe(catchError(this.errorMgmt));
   }
-  // Get all students
+  // Get all employees
   GetEmployeess() {
-    return this.http.get(`${this.endpoint}`);
+    return this.http.get(`${this.endpoint}employee`);
   }
 
   errorMgmt(error: HttpErrorResponse) {

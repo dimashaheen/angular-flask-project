@@ -24,6 +24,8 @@ export class AddEmployeeComponent implements OnInit {
   @ViewChild('resetStudentForm') myNgForm:any;
   readonly separatorKeysCodes: number[] = [ENTER, COMMA];
   employeeForm!: FormGroup;
+  titles: any = ['CEO', 'Head', 'Leader', 'Team Manager', 'Project Manager', 'Software Egineer'];
+
 
   ngOnInit() {
     this.submitBookForm();
@@ -38,15 +40,19 @@ export class AddEmployeeComponent implements OnInit {
  
   submitBookForm() {
     this.employeeForm = this.fb.group({
+      id: ['', [Validators.required]],
       first_name: ['', [Validators.required]],
       last_name: ['', [Validators.required]],
       title: ['', [Validators.required]],
     });
   }
     /* Submit book */
-    submitStudentForm() {
+    submitEmployeeForm() {
+      console.log(this.employeeForm)
       if (this.employeeForm.valid) {
+        console.log('ok')
         this.employeeAPI.AddEmployee(this.employeeForm.value).subscribe((res) => {
+          this.router.navigateByUrl('employee')
           this.ngZone.run(() => this.router.navigateByUrl('/employee'));
         });
       }

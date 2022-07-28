@@ -1,4 +1,7 @@
 from flask import Flask, make_response, request, jsonify
+import flask
+from flask_cors import CORS
+import flask_cors
 from flask_sqlalchemy import SQLAlchemy
 from marshmallow_sqlalchemy import SQLAlchemySchema
 from marshmallow import fields, post_load
@@ -11,6 +14,7 @@ app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:%s@localhost:3306/employees.db' % quote('R$@2022Dima')
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+cors = CORS(app)
 
 #create model employee
 class employees(db.Model):
@@ -42,12 +46,12 @@ employees_Schema = EmployeeSchema(many=True)
 
 
 #to get all user
-@app.route('/employees', methods=['GET'])
+@app.route('/employee', methods=['GET'])
 def index():
     get_employees = employees.query.all()
     employees_schema = employees_Schema
     all_employees = employees_schema.dump(get_employees)
-    return jsonify({"employees": all_employees})
+    return jsonify(all_employees)
     
 
 #to post a user

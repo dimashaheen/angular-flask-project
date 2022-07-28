@@ -19,35 +19,25 @@ export class EmployeeComponent implements OnInit {
     'id',
     'first_name',
     'last_name',
-    'title',
-    'action'
+    'title'
   ];
   constructor(private employeeApi: ApiService) {
 
   }
 
   ngOnInit() {    
-    this.employeeApi.GetEmployeess().subscribe((data) => {
-      
+    this.employeeApi.GetEmployeess().subscribe((data) => {  
     this.EmployeeData = data;
+    console.log(data)
     this.dataSource = new MatTableDataSource<Employee>(this.EmployeeData);
     setTimeout(() => {
       this.dataSource.paginator = this.paginator;
     }, 0);
   });}
 
-  deleteProfessor(index: number, e:any) {
-    if (window.confirm('Are you sure')) {
-      const data = this.dataSource.data;
-      data.splice(
-        this.paginator.pageIndex * this.paginator.pageSize + index,
-        1
-      );
-      this.dataSource.data = data;
-      //this.employeeApi.DeleteProf(e._id).subscribe();
-    }
+ 
   }
 
 
 
-}
+
